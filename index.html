@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="github">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Do.Son Pharma — Research Laboratory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Serif+Display:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════
+   DESIGN TOKENS
+══════════════════════════════════════ */
+:root {
+  --sans: 'DM Sans', -apple-system, sans-serif;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --mono: 'JetBrains Mono', monospace;
+  --ease: cubic-bezier(.22,.68,0,1.2);
+  --ease-out: cubic-bezier(.25,.46,.45,.94);
+  --fs-xs:   0.625rem;
+  --fs-sm:   0.75rem;
+  --fs-base: 0.875rem;
+  --fs-md:   1rem;
+  --fs-lg:   1.125rem;
+  --fs-xl:   1.5rem;
+  --fs-2xl:  2rem;
+  --fs-3xl:  2.75rem;
+}
+
+[data-theme="github"] {
+  --bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bg4:#30363d;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#e6edf3;--text2:#8b949e;--text3:#6e7681;
+  --accent:#3fb950;--accent2:#56d364;--accent-bg:rgba(63,185,80,.1);--accent-bg2:rgba(63,185,80,.05);
+  --link:#58a6ff;--nav-bg:rgba(13,17,23,.9);--shadow:rgba(0,0,0,.4);
+}
+[data-theme="vscode"] {
+  --bg:#1e1e1e;--bg2:#252526;--bg3:#2d2d2d;--bg4:#3c3c3c;
+  --line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+  --text:#d4d4d4;--text2:#9d9d9d;--text3:#6a6a6a;
+  --accent:#4ec9b0;--accent2:#6ed9c4;--accent-bg:rgba(78,201,176,.1);--accent-bg2:rgba(78,201,176,.05);
+  --link:#569cd6;--nav-bg:rgba(30,30,30,.9);--shadow:rgba(0,0,0,.5);
+}
+[data-theme="tokyo"] {
+  --bg:#1a1b26;--bg2:#24283b;--bg3:#2f334d;--bg4:#3b4261;
+  --line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+  --text:#c0caf5;--text2:#9aa5ce;--text3:#565f89;
+  --accent:#9ece6a;--accent2:#b5e07a;--accent-bg:rgba(158,206,106,.1);--accent-bg2:rgba(158,206,106,.05);
+  --link:#7aa2f7;--nav-bg:rgba(26,27,38,.9);--shadow:rgba(0,0,0,.5);
+}
+[data-theme="catppuccin"] {
+  --bg:#1e1e2e;--bg2:#181825;--bg3:#313244;--bg4:#45475a;
+  --line:rgba(255,255,255,.07);--line2:rgba(255,255,255,.13);
+  --text:#cdd6f4;--text2:#bac2de;--text3:#7f849c;
+  --accent:#a6e3a1;--accent2:#b8f0b3;--accent-bg:rgba(166,227,161,.1);--accent-bg2:rgba(166,227,161,.05);
+  --link:#89b4fa;--nav-bg:rgba(30,30,46,.9);--shadow:rgba(0,0,0,.5);
+}
+[data-theme="solarized"] {
+  --bg:#002b36;--bg2:#073642;--bg3:#094652;--bg4:#1c4a56;
+  --line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#93a1a1;--text2:#8aa3a9;--text3:#5a7b85;
+  --accent:#859900;--accent2:#a0b400;--accent-bg:rgba(133,153,0,.14);--accent-bg2:rgba(133,153,0,.07);
+  --link:#268bd2;--nav-bg:rgba(0,43,54,.9);--shadow:rgba(0,0,0,.5);
+}
+[data-theme="light"] {
+  --bg:#fafaf8;--bg2:#f0ede8;--bg3:#e6e2db;--bg4:#d4cfca;
+  --line:rgba(0,0,0,.1);--line2:rgba(0,0,0,.18);
+  --text:#1a1815;--text2:#3d3a35;--text3:#6b6560;
+  --accent:#2d6a4f;--accent2:#1b4332;--accent-bg:rgba(45,106,79,.12);--accent-bg2:rgba(45,106,79,.06);
+  --link:#1a5e9e;--nav-bg:rgba(250,250,248,.92);--shadow:rgba(0,0,0,.12);
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg); color: var(--text); font-family: var(--sans);
+  line-height: 1.65; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden; transition: background .3s, color .3s;
+}
+a { color: var(--accent); text-decoration: none; transition: color .15s; }
+a:hover { color: var(--accent2); }
+::selection { background: var(--accent); color: var(--bg); }
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--line2); border-radius: 3px; }
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 1000; pointer-events: none;
+  opacity: .015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 180px;
+}
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  background: var(--nav-bg); backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid var(--line); height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2.5rem; transition: background .3s;
+}
+.nav-logo { display: flex; align-items: center; gap: .8rem; text-decoration: none; cursor: pointer; flex-shrink: 0; }
+.nav-logo-mark {
+  width: 30px; height: 30px; border: 1.5px solid var(--accent);
+  display: grid; place-items: center; position: relative; overflow: hidden; flex-shrink: 0;
+}
+.nav-logo-mark::before { content: ''; position: absolute; inset: 5px; background: var(--accent-bg); }
+.nav-logo-mark svg { position: relative; z-index: 1; }
+.nav-logo-name { font-family: var(--sans); font-size: var(--fs-sm); font-weight: 700; color: var(--text); letter-spacing: -.01em; line-height: 1.2; }
+.nav-logo-sub { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; color: var(--accent); letter-spacing: .1em; text-transform: uppercase; line-height: 1.4; }
+.nav-center { display: flex; gap: 0; list-style: none; position: absolute; left: 50%; transform: translateX(-50%); }
+.nav-center a { font-size: var(--fs-xs); font-weight: 500; letter-spacing: .04em; color: var(--text3); padding: .38rem .7rem; border-radius: 4px; transition: all .15s; white-space: nowrap; }
+.nav-center a:hover { color: var(--text2); background: var(--accent-bg2); }
+.nav-center a.active { color: var(--accent); }
+.nav-actions { display: flex; align-items: center; gap: .35rem; flex-shrink: 0; }
+.nav-btn { height: 28px; padding: 0 .6rem; border-radius: 5px; border: 1px solid var(--line2); background: var(--bg2); color: var(--text2); font-size: var(--fs-xs); font-family: var(--sans); font-weight: 500; cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: .3rem; white-space: nowrap; }
+.nav-btn:hover { color: var(--text); background: var(--bg3); }
+.nav-btn.lang-active { color: var(--accent); background: var(--accent-bg); border-color: transparent; }
+.dropdown-wrap { position: relative; }
+.dropdown { position: absolute; top: calc(100% + .5rem); right: 0; background: var(--bg2); border: 1px solid var(--line2); border-radius: 8px; padding: .35rem; min-width: 148px; display: none; z-index: 300; box-shadow: 0 8px 32px var(--shadow); }
+.dropdown.open { display: block; }
+.dropdown-item { display: flex; align-items: center; gap: .5rem; padding: .4rem .6rem; border-radius: 5px; font-size: var(--fs-sm); color: var(--text2); cursor: pointer; transition: all .15s; font-family: var(--sans); }
+.dropdown-item:hover { background: var(--bg3); color: var(--text); }
+.dropdown-item.active { color: var(--accent); background: var(--accent-bg); }
+.color-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+.nav-divider { width: 1px; height: 16px; background: var(--line2); margin: 0 .05rem; }
+.nav-mobile-btn { display: none; background: none; border: 1px solid var(--line2); color: var(--text2); width: 28px; height: 28px; border-radius: 5px; cursor: pointer; font-size: var(--fs-sm); align-items: center; justify-content: center; }
+
+/* MOBILE MENU */
+.mob-menu { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 600; flex-direction: column; padding: 5rem 2.5rem 3rem; gap: .15rem; }
+.mob-menu.open { display: flex; }
+.mob-menu a { font-family: var(--sans); font-size: var(--fs-xl); font-weight: 600; color: var(--text2); padding: .6rem 0; border-bottom: 1px solid var(--line); transition: color .15s; }
+.mob-menu a:hover { color: var(--accent); }
+.mob-close { position: absolute; top: 1.2rem; right: 1.5rem; background: none; border: 1px solid var(--line2); color: var(--text2); width: 32px; height: 32px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: var(--fs-sm); }
+
+/* LAYOUT */
+.wrap { max-width: 1040px; margin: 0 auto; padding: 56px 2.5rem 0; }
+
+/* HERO */
+.hero { padding: 5.5rem 0 4rem; display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0 3.5rem; border-bottom: 1px solid var(--line); }
+.hero-divider { background: var(--line); }
+.hero-left { display: flex; flex-direction: column; justify-content: space-between; }
+.hero-eyebrow { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.8rem; display: flex; align-items: center; gap: .7rem; }
+.hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+.hero-title { font-family: var(--sans); font-size: clamp(var(--fs-2xl), 4.5vw, 3.2rem); font-weight: 700; line-height: 1.08; color: var(--text); letter-spacing: -.025em; margin-bottom: 2.5rem; }
+.hero-title em { font-style: normal; color: var(--accent); font-family: var(--sans); font-weight: 700; font-size: 1em; }
+.hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 1rem; margin-top: auto; padding-top: 2.5rem; border-top: 1px solid var(--line); }
+.hstat-n { font-family: var(--mono); font-size: 2rem; font-weight: 500; color: var(--accent); line-height: 1; }
+.hstat-l { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 500; letter-spacing: .06em; color: var(--text3); margin-top: .2rem; text-transform: uppercase; }
+.hero-right { display: flex; flex-direction: column; justify-content: space-between; }
+.hero-bio { font-size: var(--fs-base); color: var(--text2); line-height: 1.9; margin-bottom: 2rem; }
+.hero-bio strong { color: var(--text); font-weight: 600; }
+.hero-meta { margin-bottom: 2rem; }
+.hero-meta-row { display: flex; align-items: center; gap: .75rem; padding: .55rem 0; border-bottom: 1px solid var(--line); }
+.hero-meta-row:first-child { border-top: 1px solid var(--line); }
+.hero-meta-key { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text3); width: 88px; flex-shrink: 0; }
+.hero-meta-val { color: var(--text2); font-size: var(--fs-sm); font-family: var(--sans); }
+.hero-chips { display: flex; flex-wrap: wrap; gap: .3rem; }
+.chip { font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: .03em; padding: .22rem .55rem; border-radius: 3px; border: 1px solid var(--line2); color: var(--text3); background: transparent; transition: all .2s; }
+.chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-bg2); }
+.hero-ctas { display: flex; gap: .6rem; margin-top: 2rem; flex-wrap: wrap; }
+.btn-primary { display: inline-flex; align-items: center; gap: .5rem; background: var(--accent); color: var(--bg); font-size: var(--fs-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .65rem 1.4rem; border-radius: 3px; border: 1px solid var(--accent); transition: all .2s; }
+.btn-primary:hover { background: var(--accent2); color: var(--bg); transform: translateY(-1px); box-shadow: 0 8px 24px var(--accent-bg); }
+.btn-outline { display: inline-flex; align-items: center; gap: .5rem; background: transparent; border: 1px solid var(--line2); color: var(--text2); font-size: var(--fs-xs); letter-spacing: .08em; text-transform: uppercase; padding: .65rem 1.4rem; border-radius: 3px; transition: all .2s; }
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+/* MARQUEE */
+.marquee-wrap { overflow: hidden; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: .75rem 0; background: var(--bg2); }
+.marquee-track { display: flex; animation: marquee 32s linear infinite; white-space: nowrap; }
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+.marquee-item { font-family: var(--sans); font-size: var(--fs-xs); letter-spacing: .1em; text-transform: uppercase; color: var(--text3); padding: 0 2.5rem; display: flex; align-items: center; gap: .65rem; }
+.marquee-item span.dot { color: var(--accent); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* SECTION */
+.section { padding: 4.5rem 0; border-bottom: 1px solid var(--line); }
+.section:last-of-type { border-bottom: none; }
+.section-head { display: grid; grid-template-columns: 180px 1fr; gap: 0 3rem; margin-bottom: 3rem; align-items: start; }
+.section-num { font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: .16em; color: var(--text3); text-transform: uppercase; padding-top: .35rem; }
+.section-label { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .12em; color: var(--accent); text-transform: uppercase; margin-bottom: .5rem; }
+.section-title { font-family: var(--sans); font-size: clamp(var(--fs-xl), 2.8vw, 2.2rem); font-weight: 700; line-height: 1.15; color: var(--text); letter-spacing: -.02em; }
+.section-title em { font-style: normal; color: var(--accent); font-family: var(--sans); font-weight: 700; font-size: 1em; letter-spacing: -.02em; }
+.section-sub { font-size: var(--fs-sm); color: var(--text2); line-height: 1.85; max-width: 520px; margin-top: .6rem; }
+
+/* ABOUT */
+.about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 2.5rem; align-items: start; }
+.about-visual { background: var(--bg2); border: 1px solid var(--line); border-radius: 6px; padding: 1.8rem; overflow: hidden; }
+.about-metric { display: flex; justify-content: space-between; align-items: baseline; padding: .8rem 0; border-bottom: 1px solid var(--line); }
+.about-metric:last-child { border-bottom: none; }
+.about-metric-key { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; color: var(--text3); text-transform: uppercase; }
+.about-metric-val { font-family: var(--mono); font-size: var(--fs-lg); font-weight: 500; color: var(--accent); }
+.about-metric-val small { font-size: var(--fs-xs); font-family: var(--mono); color: var(--text3); }
+.about-img-block { margin-top: 1.2rem; border-radius: 4px; overflow: hidden; border: 1px solid var(--line); height: 120px; position: relative; background: var(--bg3); }
+.about-img-block svg { width: 100%; height: 100%; }
+.pillars { display: flex; flex-direction: column; gap: .4rem; }
+.pillar { padding: 1.1rem 1.3rem; border: 1px solid var(--line); border-radius: 5px; background: var(--bg2); transition: all .2s var(--ease-out); cursor: default; }
+.pillar:hover { border-color: var(--line2); background: var(--bg3); transform: translateX(5px); }
+.pillar-head { display: flex; align-items: center; gap: .7rem; margin-bottom: .4rem; }
+.pillar-icon { font-size: .9rem; }
+.pillar-name { font-size: var(--fs-base); font-weight: 600; color: var(--text); }
+.pillar-desc { font-size: var(--fs-sm); color: var(--text3); line-height: 1.7; }
+
+/* RESEARCH GRID */
+.rg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.rg-card { background: var(--bg2); padding: 1.5rem; transition: background .2s; display: flex; flex-direction: column; }
+.rg-card:hover { background: var(--bg3); }
+.rg-num { font-family: var(--mono); font-size: var(--fs-xs); letter-spacing: .1em; color: var(--text3); margin-bottom: .9rem; }
+.rg-icon { font-size: 1.25rem; margin-bottom: .6rem; }
+.rg-title { font-size: var(--fs-base); font-weight: 600; color: var(--text); margin-bottom: .35rem; line-height: 1.35; }
+.rg-desc { font-size: var(--fs-sm); color: var(--text3); line-height: 1.72; flex: 1; margin-bottom: .8rem; }
+.rg-tags { display: flex; flex-wrap: wrap; gap: .2rem; margin-top: auto; }
+.rg-tag { font-family: var(--mono); font-size: var(--fs-xs); color: var(--accent); background: var(--accent-bg); padding: .06rem .32rem; border-radius: 2px; }
+
+/* INGREDIENTS */
+.ingr-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.ingr-list { background: var(--bg2); display: flex; flex-direction: column; }
+.ingr-item { display: flex; align-items: center; gap: .8rem; padding: 1rem 1.3rem; cursor: pointer; border-bottom: 1px solid var(--line); transition: all .18s; position: relative; }
+.ingr-item:last-child { border-bottom: none; }
+.ingr-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--accent); transform: scaleY(0); transition: transform .2s var(--ease); }
+.ingr-item:hover, .ingr-item.active { background: var(--bg3); }
+.ingr-item.active::before { transform: scaleY(1); }
+.ingr-emoji { font-size: .95rem; width: 22px; text-align: center; flex-shrink: 0; }
+.ingr-name { font-size: var(--fs-base); font-weight: 500; color: var(--text); line-height: 1.3; }
+.ingr-origin { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 500; color: var(--accent); letter-spacing: .03em; }
+.ingr-arrow { margin-left: auto; font-size: var(--fs-xs); color: var(--text3); transition: transform .2s, color .2s; }
+.ingr-item.active .ingr-arrow, .ingr-item:hover .ingr-arrow { color: var(--accent); transform: translateX(3px); }
+.ingr-detail { background: var(--bg3); padding: 2.2rem; display: flex; flex-direction: column; justify-content: center; }
+.ingr-detail-inner { transition: opacity .25s, transform .25s; }
+.d-emoji { font-size: 2.4rem; display: block; margin-bottom: .9rem; }
+.d-name { font-family: var(--sans); font-size: var(--fs-xl); font-weight: 700; color: var(--text); margin-bottom: .2rem; line-height: 1.2; }
+.d-sci { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 500; color: var(--accent); letter-spacing: .04em; margin-bottom: 1rem; }
+.d-desc { font-size: var(--fs-sm); color: var(--text2); line-height: 1.85; margin-bottom: 1.3rem; }
+.d-props { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; }
+.d-prop { background: var(--bg2); border-radius: 4px; padding: .75rem .95rem; border: 1px solid var(--line); }
+.d-prop-key { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text3); margin-bottom: .22rem; }
+.d-prop-val { font-size: var(--fs-sm); color: var(--text); font-weight: 500; }
+
+/* TEAM */
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.team-card { background: var(--bg2); padding: 1.5rem 1.3rem; transition: background .2s; position: relative; overflow: hidden; }
+.team-card:hover { background: var(--bg3); }
+.team-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--accent); transform: scaleX(0); transition: transform .3s var(--ease); transform-origin: left; }
+.team-card:hover::after { transform: scaleX(1); }
+.team-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--bg4); border: 1px solid var(--line2); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: var(--fs-md); color: var(--accent); margin-bottom: 1rem; }
+.team-name { font-size: var(--fs-base); font-weight: 600; color: var(--text); margin-bottom: .25rem; line-height: 1.3; }
+.team-role { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin-bottom: .55rem; }
+.team-bio { font-size: var(--fs-sm); color: var(--text3); line-height: 1.65; }
+.team-pub { font-family: var(--sans); font-size: var(--fs-xs); color: var(--text3); margin-top: .65rem; padding-top: .65rem; border-top: 1px solid var(--line); }
+.team-pub span { color: var(--accent); }
+
+/* PUBLICATIONS */
+.pub-list { display: flex; flex-direction: column; }
+.pub-item { display: grid; grid-template-columns: 56px 1fr; gap: 0 1.5rem; padding: 1.4rem 0; border-bottom: 1px solid var(--line); }
+.pub-item:last-child { border-bottom: none; }
+.pub-year { font-family: var(--mono); font-size: var(--fs-xs); color: var(--text3); padding-top: .3rem; }
+.pub-title { font-size: var(--fs-base); font-weight: 500; color: var(--text); margin-bottom: .25rem; line-height: 1.45; }
+.pub-title em { color: var(--accent); font-style: italic; } /* species names keep italic - scientific convention */
+.pub-authors { font-family: var(--mono); font-size: var(--fs-xs); color: var(--accent); margin-bottom: .2rem; letter-spacing: .04em; }
+.pub-journal { font-size: var(--fs-sm); color: var(--text3); font-style: italic; margin-bottom: .45rem; }
+.pub-tags { display: flex; gap: .22rem; flex-wrap: wrap; }
+.pub-tag { font-family: var(--mono); font-size: var(--fs-xs); color: var(--text3); border: 1px solid var(--line); padding: .05rem .3rem; border-radius: 2px; }
+
+/* AWARDS */
+.aw-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 3rem; }
+.aw-list { display: flex; flex-direction: column; gap: .35rem; }
+.aw-row { display: flex; align-items: center; gap: .75rem; padding: .75rem 1rem; border: 1px solid var(--line); border-radius: 5px; background: var(--bg2); transition: all .18s; }
+.aw-row:hover { border-color: var(--line2); background: var(--bg3); }
+.aw-row.top { border-color: var(--accent-bg); background: var(--accent-bg2); }
+.aw-icon { font-size: .75rem; width: 16px; flex-shrink: 0; }
+.aw-text { flex: 1; font-size: var(--fs-sm); color: var(--text2); }
+.aw-text strong { color: var(--text); font-weight: 600; }
+.aw-yr { font-family: var(--mono); font-size: var(--fs-xs); color: var(--text3); white-space: nowrap; }
+.partners-label { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); margin-bottom: .8rem; }
+.partners-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .35rem; }
+.partner-cell { padding: .75rem .9rem; background: var(--bg2); border: 1px solid var(--line); border-radius: 4px; transition: border-color .15s; }
+.partner-cell:hover { border-color: var(--line2); }
+.partner-name { font-size: var(--fs-sm); color: var(--text2); font-weight: 500; }
+.partner-loc { font-family: var(--sans); font-size: var(--fs-xs); color: var(--text3); margin-top: .12rem; }
+
+/* NEWS */
+.news-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.news-card { background: var(--bg2); transition: background .2s; cursor: pointer; }
+.news-card:hover { background: var(--bg3); }
+.news-thumb { height: 96px; background: var(--bg3); display: grid; place-items: center; position: relative; overflow: hidden; }
+.news-thumb svg { opacity: .2; }
+.news-thumb::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 60%, var(--accent-bg) 0%, transparent 70%); pointer-events: none; }
+.news-body { padding: 1.1rem 1.2rem; }
+.news-cat { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+.news-title { font-size: var(--fs-base); font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: .4rem; }
+.news-excerpt { font-size: var(--fs-sm); color: var(--text3); line-height: 1.65; }
+.news-date { font-family: var(--mono); font-size: var(--fs-xs); color: var(--text3); margin-top: .65rem; }
+
+/* LAB VISUAL */
+.lab-visual { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-bottom: 3rem; }
+.lab-panel { background: var(--bg2); height: 150px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .75rem; position: relative; overflow: hidden; transition: background .2s; }
+.lab-panel:hover { background: var(--bg3); }
+.lab-panel-label { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); z-index: 1; }
+.lab-panel svg { z-index: 1; }
+.lab-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, var(--accent-bg2) 0%, transparent 70%); }
+
+/* CONTACT */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 3.5rem; align-items: start; }
+.contact-info { display: flex; flex-direction: column; gap: 1.3rem; }
+.contact-key { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--text3); margin-bottom: .35rem; }
+.contact-val { font-size: var(--fs-sm); color: var(--text2); line-height: 1.8; }
+.contact-val a { color: var(--text2); }
+.contact-val a:hover { color: var(--accent); }
+.form { display: flex; flex-direction: column; gap: .8rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; }
+.form-group { display: flex; flex-direction: column; gap: .35rem; }
+.form-label { font-family: var(--sans); font-size: var(--fs-xs); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--text3); }
+.form-ctrl { background: var(--bg2); border: 1px solid var(--line); color: var(--text); font-family: var(--sans); font-size: var(--fs-sm); padding: .65rem .85rem; border-radius: 4px; outline: none; transition: border-color .2s; resize: none; width: 100%; -webkit-appearance: none; appearance: none; }
+.form-ctrl:focus { border-color: var(--accent-bg); }
+.form-ctrl::placeholder { color: var(--text3); }
+.form-submit { display: inline-flex; align-items: center; gap: .5rem; background: none; border: 1px solid var(--accent); color: var(--accent); font-family: var(--sans); font-size: var(--fs-xs); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: .72rem 1.5rem; border-radius: 3px; cursor: pointer; transition: all .2s; width: fit-content; }
+.form-submit:hover { background: var(--accent); color: var(--bg); }
+.msg-box { margin-top: .6rem; font-size: var(--fs-sm); font-family: var(--mono); padding: .55rem .8rem; border-radius: 4px; display: none; }
+.msg-box.ok { display: block; color: var(--accent); background: var(--accent-bg); border: 1px solid var(--accent-bg); }
+.msg-box.err { display: block; color: #f85149; background: rgba(248,81,73,.08); border: 1px solid rgba(248,81,73,.2); }
+
+/* FOOTER */
+.footer { padding: 2rem 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; border-top: 1px solid var(--line); }
+.footer-copy { font-family: var(--mono); font-size: var(--fs-xs); color: var(--text3); }
+.footer-cert { font-family: var(--mono); font-size: var(--fs-xs); color: var(--accent); margin-top: .2rem; }
+.footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+.footer-links a { font-family: var(--sans); font-size: var(--fs-xs); color: var(--text3); transition: color .15s; }
+.footer-links a:hover { color: var(--accent); }
+
+/* FADE IN */
+.fi { opacity: 0; transform: translateY(18px); transition: opacity .65s var(--ease-out), transform .65s var(--ease-out); }
+.fi.on { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .nav { padding: 0 1.5rem; }
+  .nav-center { display: none; }
+  .nav-mobile-btn { display: flex; }
+  .wrap { padding: 56px 1.5rem 0; }
+  .hero { grid-template-columns: 1fr; gap: 2.5rem; padding: 3.5rem 0 3rem; }
+  .hero-divider { display: none; }
+  .about-grid { grid-template-columns: 1fr; }
+  .rg { grid-template-columns: 1fr 1fr; }
+  .news-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .aw-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .section-head { grid-template-columns: 1fr; gap: .4rem; }
+  .lab-visual { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .rg { grid-template-columns: 1fr; }
+  .ingr-layout { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .d-props { grid-template-columns: 1fr; }
+  .partners-grid { grid-template-columns: 1fr; }
+  .lab-visual { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="document.getElementById('mobMenu').classList.remove('open')">✕</button>
+  <a href="#about"        onclick="closeMob()"><span class="t" data-key="nav_about"></span></a>
+  <a href="#research"     onclick="closeMob()"><span class="t" data-key="nav_research"></span></a>
+  <a href="#ingredients"  onclick="closeMob()"><span class="t" data-key="nav_ingredients"></span></a>
+  <a href="#team"         onclick="closeMob()"><span class="t" data-key="nav_team"></span></a>
+  <a href="#publications" onclick="closeMob()"><span class="t" data-key="nav_publications"></span></a>
+  <a href="#contact"      onclick="closeMob()"><span class="t" data-key="nav_contact"></span></a>
+</div>
+
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark">
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+        <circle cx="7" cy="7" r="5" stroke="var(--accent)" stroke-width=".8"/>
+        <circle cx="7" cy="7" r="2" fill="var(--accent)" opacity=".7"/>
+        <circle cx="7" cy="1.5" r="1.2" fill="var(--accent)"/>
+        <circle cx="12.5" cy="7" r="1.2" fill="var(--accent)" opacity=".5"/>
+        <circle cx="7" cy="12.5" r="1.2" fill="var(--accent)"/>
+        <circle cx="1.5" cy="7" r="1.2" fill="var(--accent)" opacity=".5"/>
+      </svg>
+    </div>
+    <div>
+      <div class="nav-logo-name">Do.Son Pharma</div>
+      <div class="nav-logo-sub t" data-key="nav_logo_sub"></div>
+    </div>
+  </a>
+
+  <ul class="nav-center">
+    <li><a href="#about"><span class="t" data-key="nav_about"></span></a></li>
+    <li><a href="#research"><span class="t" data-key="nav_research"></span></a></li>
+    <li><a href="#ingredients"><span class="t" data-key="nav_ingredients"></span></a></li>
+    <li><a href="#team"><span class="t" data-key="nav_team"></span></a></li>
+    <li><a href="#publications"><span class="t" data-key="nav_publications"></span></a></li>
+    <li><a href="#contact"><span class="t" data-key="nav_contact"></span></a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="dropdown-wrap">
+      <button class="nav-btn" onclick="toggleDD('theme-dd')">🎨 <span id="themeLabel">GitHub</span></button>
+      <div class="dropdown" id="theme-dd">
+        <div class="dropdown-item active" onclick="setTheme('github','GitHub')"><span class="color-dot" style="background:#3fb950"></span> GitHub Dark</div>
+        <div class="dropdown-item" onclick="setTheme('vscode','VS Code')"><span class="color-dot" style="background:#4ec9b0"></span> VS Code Dark</div>
+        <div class="dropdown-item" onclick="setTheme('tokyo','Tokyo')"><span class="color-dot" style="background:#9ece6a"></span> Tokyo Night</div>
+        <div class="dropdown-item" onclick="setTheme('catppuccin','Mocha')"><span class="color-dot" style="background:#a6e3a1"></span> Catppuccin</div>
+        <div class="dropdown-item" onclick="setTheme('solarized','Solar')"><span class="color-dot" style="background:#859900"></span> Solarized</div>
+        <div class="dropdown-item" onclick="setTheme('light','Light')"><span class="color-dot" style="background:#2d6a4f;border:1px solid #ccc"></span> Light</div>
+      </div>
+    </div>
+    <div class="nav-divider"></div>
+    <button class="nav-btn lang-active" id="btn-vi" onclick="setLang('vi')">VI</button>
+    <button class="nav-btn" id="btn-en" onclick="setLang('en')">EN</button>
+    <button class="nav-mobile-btn" onclick="document.getElementById('mobMenu').classList.add('open')">☰</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-left fi">
+    <div>
+      <div class="hero-eyebrow"><span class="t" data-key="hero_eyebrow"></span></div>
+      <h1 class="hero-title">
+        <span class="t" data-key="hero_title_1"></span><em class="t" data-key="hero_title_em"></em><br>
+        <span class="t" data-key="hero_title_2"></span>
+      </h1>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hstat-n">12+</div><div class="hstat-l t" data-key="stat_years"></div></div>
+      <div><div class="hstat-n">48</div><div class="hstat-l t" data-key="stat_patents"></div></div>
+      <div><div class="hstat-n">200+</div><div class="hstat-l t" data-key="stat_formulas"></div></div>
+      <div><div class="hstat-n">32</div><div class="hstat-l t" data-key="stat_scientists"></div></div>
+    </div>
+  </div>
+
+  <div class="hero-divider"></div>
+
+  <div class="hero-right fi" style="transition-delay:.1s">
+    <p class="hero-bio" id="heroBio"></p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-row">
+        <span class="hero-meta-key">Email</span>
+        <span class="hero-meta-val"><a href="mailto:enquiries@dosonpharma.com">enquiries@dosonpharma.com</a></span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="hero-meta-key t" data-key="meta_location"></span>
+        <span class="hero-meta-val">Ho Chi Minh City · United Kingdom</span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="hero-meta-key t" data-key="meta_certified"></span>
+        <span class="hero-meta-val">ISO 22716 · B Corp · UK MHRA · COSMOS</span>
+      </div>
+    </div>
+
+    <div class="hero-chips">
+      <span class="chip">Nano Encapsulation</span>
+      <span class="chip">Phytochemistry</span>
+      <span class="chip">Dermatology</span>
+      <span class="chip">Microbiome</span>
+      <span class="chip">Green Chemistry</span>
+      <span class="chip">Vegan · Cruelty-Free</span>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#research" class="btn-primary"><span class="t" data-key="cta_research"></span> →</a>
+      <a href="#contact" class="btn-outline"><span class="t" data-key="nav_contact"></span></a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
+
+<div class="wrap">
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-head fi">
+    <div class="section-num">01 —</div>
+    <div>
+      <div class="section-label t" data-key="nav_about"></div>
+      <h2 class="section-title">
+        <span class="t" data-key="about_title_1"></span><em class="t" data-key="hero_title_em"></em> <span class="t" data-key="about_title_2"></span>
+      </h2>
+      <p class="section-sub t" data-key="about_sub"></p>
+    </div>
+  </div>
+
+  <div class="about-grid fi" style="transition-delay:.1s">
+    <div class="about-visual">
+      <div class="about-metric">
+        <span class="about-metric-key t" data-key="about_founded"></span>
+        <span class="about-metric-val">2012</span>
+      </div>
+      <div class="about-metric">
+        <span class="about-metric-key t" data-key="meta_location"></span>
+        <span class="about-metric-val">UK <small>+</small> VN</span>
+      </div>
+      <div class="about-metric">
+        <span class="about-metric-key t" data-key="stat_scientists"></span>
+        <span class="about-metric-val">32</span>
+      </div>
+      <div class="about-metric">
+        <span class="about-metric-key t" data-key="stat_patents"></span>
+        <span class="about-metric-val">48</span>
+      </div>
+      <div class="about-metric">
+        <span class="about-metric-key">GMP</span>
+        <span class="about-metric-val">ISO <small>22716</small></span>
+      </div>
+      <div class="about-img-block">
+        <svg viewBox="0 0 300 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <radialGradient id="g1" cx="30%" cy="50%"><stop offset="0%" stop-color="var(--accent)" stop-opacity=".15"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
+            <radialGradient id="g2" cx="70%" cy="50%"><stop offset="0%" stop-color="var(--accent)" stop-opacity=".1"/><stop offset="100%" stop-color="var(--accent)" stop-opacity="0"/></radialGradient>
+          </defs>
+          <rect width="300" height="120" fill="url(#g1)"/>
+          <rect width="300" height="120" fill="url(#g2)"/>
+          <circle cx="60" cy="60" r="6" fill="var(--accent)" opacity=".6"/>
+          <circle cx="120" cy="35" r="4" fill="var(--accent)" opacity=".4"/>
+          <circle cx="150" cy="75" r="5" fill="var(--accent)" opacity=".5"/>
+          <circle cx="200" cy="40" r="4" fill="var(--accent)" opacity=".4"/>
+          <circle cx="240" cy="65" r="6" fill="var(--accent)" opacity=".6"/>
+          <circle cx="90" cy="90" r="3" fill="var(--accent)" opacity=".3"/>
+          <circle cx="180" cy="95" r="3" fill="var(--accent)" opacity=".3"/>
+          <line x1="60" y1="60" x2="120" y2="35" stroke="var(--accent)" stroke-width=".8" opacity=".3"/>
+          <line x1="120" y1="35" x2="150" y2="75" stroke="var(--accent)" stroke-width=".8" opacity=".3"/>
+          <line x1="150" y1="75" x2="200" y2="40" stroke="var(--accent)" stroke-width=".8" opacity=".3"/>
+          <line x1="200" y1="40" x2="240" y2="65" stroke="var(--accent)" stroke-width=".8" opacity=".3"/>
+          <line x1="60" y1="60" x2="90" y2="90" stroke="var(--accent)" stroke-width=".5" opacity=".2"/>
+          <line x1="150" y1="75" x2="180" y2="95" stroke="var(--accent)" stroke-width=".5" opacity=".2"/>
+          <ellipse cx="150" cy="60" rx="110" ry="40" fill="none" stroke="var(--accent)" stroke-width=".5" opacity=".1" stroke-dasharray="4 8"/>
+          <ellipse cx="150" cy="60" rx="70" ry="25" fill="none" stroke="var(--accent)" stroke-width=".5" opacity=".15" stroke-dasharray="3 6"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-head"><span class="pillar-icon">🔬</span><span class="pillar-name t" data-key="pillar1_title"></span></div>
+        <div class="pillar-desc t" data-key="pillar1_desc"></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-head"><span class="pillar-icon">🌿</span><span class="pillar-name t" data-key="pillar2_title"></span></div>
+        <div class="pillar-desc t" data-key="pillar2_desc"></div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-head"><span class="pillar-icon">🏆</span><span class="pillar-name t" data-key="pillar3_title"></span></div>
+        <div class="pillar-desc t" data-key="pillar3_desc"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="section" id="research">
+  <div class="section-head fi">
+    <div class="section-num">02 —</div>
+    <div>
+      <div class="section-label t" data-key="research_label"></div>
+      <h2 class="section-title"><em class="t" data-key="nav_research"></em> <span class="t" data-key="research_sub_title"></span></h2>
+    </div>
+  </div>
+
+  <div class="lab-visual fi" style="transition-delay:.05s">
+    <div class="lab-panel">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+        <circle cx="26" cy="26" r="20" stroke="var(--accent)" stroke-width=".8" opacity=".4"/>
+        <circle cx="26" cy="26" r="12" stroke="var(--accent)" stroke-width=".6" opacity=".3" stroke-dasharray="3 5"/>
+        <circle cx="26" cy="26" r="5" fill="var(--accent)" opacity=".5"/>
+        <circle cx="26" cy="6" r="2.5" fill="var(--accent)" opacity=".7"/>
+        <circle cx="46" cy="26" r="2.5" fill="var(--accent)" opacity=".5"/>
+        <circle cx="26" cy="46" r="2.5" fill="var(--accent)" opacity=".7"/>
+        <circle cx="6" cy="26" r="2.5" fill="var(--accent)" opacity=".5"/>
+      </svg>
+      <span class="lab-panel-label t" data-key="lab_molecular"></span>
+    </div>
+    <div class="lab-panel">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+        <path d="M10 42 Q18 20 26 28 Q34 36 42 10" stroke="var(--accent)" stroke-width="1.2" fill="none" opacity=".5"/>
+        <circle cx="10" cy="42" r="2.5" fill="var(--accent)" opacity=".6"/>
+        <circle cx="26" cy="28" r="2.5" fill="var(--accent)" opacity=".6"/>
+        <circle cx="42" cy="10" r="2.5" fill="var(--accent)" opacity=".6"/>
+        <line x1="10" y1="44" x2="42" y2="44" stroke="var(--accent)" stroke-width=".5" opacity=".2"/>
+        <line x1="10" y1="10" x2="10" y2="44" stroke="var(--accent)" stroke-width=".5" opacity=".2"/>
+      </svg>
+      <span class="lab-panel-label t" data-key="lab_data"></span>
+    </div>
+    <div class="lab-panel">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+        <rect x="14" y="8" width="8" height="36" rx="4" fill="var(--accent)" opacity=".15" stroke="var(--accent)" stroke-width=".7"/>
+        <rect x="22" y="16" width="8" height="28" rx="4" fill="var(--accent)" opacity=".1" stroke="var(--accent)" stroke-width=".7"/>
+        <rect x="30" y="22" width="8" height="22" rx="4" fill="var(--accent)" opacity=".2" stroke="var(--accent)" stroke-width=".7"/>
+        <circle cx="18" cy="6" r="2" fill="var(--accent)" opacity=".7"/>
+        <circle cx="26" cy="14" r="2" fill="var(--accent)" opacity=".6"/>
+        <circle cx="34" cy="20" r="2" fill="var(--accent)" opacity=".8"/>
+      </svg>
+      <span class="lab-panel-label t" data-key="lab_clinical"></span>
+    </div>
+  </div>
+
+  <div class="rg fi" style="transition-delay:.1s" id="rgGrid"></div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="section" id="ingredients">
+  <div class="section-head fi">
+    <div class="section-num">03 —</div>
+    <div>
+      <div class="section-label t" data-key="ingr_label"></div>
+      <h2 class="section-title">
+        <em class="t" data-key="ingr_title_em"></em> <span class="t" data-key="ingr_title_rest"></span>
+      </h2>
+    </div>
+  </div>
+  <div class="ingr-layout fi" style="transition-delay:.1s">
+    <div class="ingr-list" id="ingrList"></div>
+    <div class="ingr-detail">
+      <div class="ingr-detail-inner" id="ingrCard">
+        <span class="d-emoji" id="dEmoji">🪷</span>
+        <div class="d-name" id="dName"></div>
+        <div class="d-sci" id="dSci"></div>
+        <div class="d-desc" id="dDesc"></div>
+        <div class="d-props">
+          <div class="d-prop">
+            <div class="d-prop-key t" data-key="ingr_active"></div>
+            <div class="d-prop-val" id="dActive"></div>
+          </div>
+          <div class="d-prop">
+            <div class="d-prop-key t" data-key="ingr_benefit"></div>
+            <div class="d-prop-val" id="dBenefit"></div>
+          </div>
+          <div class="d-prop">
+            <div class="d-prop-key t" data-key="ingr_conc"></div>
+            <div class="d-prop-val" id="dConc"></div>
+          </div>
+          <div class="d-prop">
+            <div class="d-prop-key t" data-key="ingr_cert"></div>
+            <div class="d-prop-val" id="dCert"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="section" id="team">
+  <div class="section-head fi">
+    <div class="section-num">04 —</div>
+    <div>
+      <div class="section-label t" data-key="team_label"></div>
+      <h2 class="section-title"><em class="t" data-key="team_title"></em></h2>
+    </div>
+  </div>
+  <div class="team-grid fi" style="transition-delay:.1s" id="teamGrid"></div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="section" id="publications">
+  <div class="section-head fi">
+    <div class="section-num">05 —</div>
+    <div>
+      <div class="section-label t" data-key="pub_label"></div>
+      <h2 class="section-title">
+        <em class="t" data-key="pub_title_em"></em> <span class="t" data-key="pub_title_rest"></span>
+      </h2>
+    </div>
+  </div>
+  <div class="pub-list fi" style="transition-delay:.1s" id="pubList"></div>
+</section>
+
+<!-- AWARDS -->
+<section class="section" id="awards">
+  <div class="section-head fi">
+    <div class="section-num">06 —</div>
+    <div>
+      <div class="section-label t" data-key="awards_label"></div>
+      <h2 class="section-title">
+        <em class="t" data-key="awards_title_em"></em> <span class="t" data-key="awards_title_rest"></span>
+      </h2>
+    </div>
+  </div>
+  <div class="aw-grid fi" style="transition-delay:.1s">
+    <div class="aw-list" id="awList"></div>
+    <div class="partners">
+      <div class="partners-label t" data-key="partners_label"></div>
+      <div class="partners-grid">
+        <div class="partner-cell"><div class="partner-name">University of London</div><div class="partner-loc">United Kingdom</div></div>
+        <div class="partner-cell"><div class="partner-name">Imperial College</div><div class="partner-loc">London, UK</div></div>
+        <div class="partner-cell"><div class="partner-name t" data-key="partner_hpu"></div><div class="partner-loc">Hà Nội, VN</div></div>
+        <div class="partner-cell"><div class="partner-name">Cosmetics Europe</div><div class="partner-loc">Brussels, EU</div></div>
+        <div class="partner-cell"><div class="partner-name">CSIRO</div><div class="partner-loc">Australia</div></div>
+        <div class="partner-cell"><div class="partner-name t" data-key="partner_nim"></div><div class="partner-loc">Việt Nam</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="section" id="news">
+  <div class="section-head fi">
+    <div class="section-num">07 —</div>
+    <div>
+      <div class="section-label t" data-key="news_label"></div>
+      <h2 class="section-title">
+        <em class="t" data-key="news_title_em"></em> <span class="t" data-key="news_title_rest"></span>
+      </h2>
+    </div>
+  </div>
+  <div class="news-grid fi" style="transition-delay:.1s" id="newsGrid"></div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-head fi">
+    <div class="section-num">08 —</div>
+    <div>
+      <div class="section-label t" data-key="nav_contact"></div>
+      <h2 class="section-title">
+        <em class="t" data-key="contact_title_em"></em> <span class="t" data-key="contact_title_rest"></span>
+      </h2>
+    </div>
+  </div>
+  <div class="contact-grid fi" style="transition-delay:.1s">
+    <div class="contact-info">
+      <div>
+        <div class="contact-key t" data-key="contact_address_label"></div>
+        <div class="contact-val t" data-key="contact_address_val"></div>
+      </div>
+      <div>
+        <div class="contact-key">Email</div>
+        <div class="contact-val"><a href="mailto:enquiries@dosonpharma.com">enquiries@dosonpharma.com</a></div>
+      </div>
+      <div>
+        <div class="contact-key t" data-key="contact_phone_label"></div>
+        <div class="contact-val"><a href="tel:+84913755553">+84 913 755 553</a></div>
+      </div>
+    </div>
+    <div class="form">
+      <form id="contact_form" action="https://formspree.io/f/xeoalojj" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label t" data-key="form_name"></label>
+            <input type="text" class="form-ctrl" name="full-name" id="formNameInput" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-ctrl" name="email" placeholder="email@example.com" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label t" data-key="form_company"></label>
+            <input type="text" class="form-ctrl" name="company" id="formCompanyInput">
+          </div>
+          <div class="form-group">
+            <label class="form-label t" data-key="form_phone"></label>
+            <input type="tel" class="form-ctrl" name="phone" id="formPhoneInput">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label t" data-key="form_purpose"></label>
+          <select class="form-ctrl" name="inquiry-type" id="purposeSelect"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label t" data-key="form_message"></label>
+          <textarea class="form-ctrl" name="message" rows="4" id="formMsgInput" required></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="submit_btn">
+          <span class="t" data-key="form_submit"></span> →
+        </button>
+        <div class="msg-box" id="msg_box"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer fi">
+  <div>
+    <div class="footer-copy t" data-key="footer_copy"></div>
+    <div class="footer-cert">ISO 22716 · GMP · B Corp · UK MHRA · COSMOS</div>
+  </div>
+  <div class="footer-links">
+    <a href="#about"><span class="t" data-key="nav_about"></span></a>
+    <a href="#research"><span class="t" data-key="nav_research"></span></a>
+    <a href="#publications"><span class="t" data-key="nav_publications"></span></a>
+    <a href="#contact"><span class="t" data-key="nav_contact"></span></a>
+    <a href="mailto:enquiries@dosonpharma.com">Email</a>
+  </div>
+</footer>
+
+</div>
+
+<script>
+/* ══════════════════════════════════════
+   TRANSLATION DATABASE — 100% đồng bộ
+══════════════════════════════════════ */
+const TRANSLATIONS = {
+  vi: {
+    // Nav
+    nav_logo_sub: "Phòng Nghiên cứu",
+    nav_about: "Về chúng tôi",
+    nav_research: "Nghiên cứu",
+    nav_ingredients: "Nguyên liệu",
+    nav_team: "Đội ngũ",
+    nav_publications: "Ấn phẩm",
+    nav_contact: "Liên hệ",
+
+    // Hero
+    hero_eyebrow: "Phòng nghiên cứu · Thành lập 2012",
+    hero_title_1: "Khoa học ",
+    hero_title_em: "gặp gỡ",
+    hero_title_2: "thiên nhiên Việt",
+    stat_years: "Năm nghiên cứu",
+    stat_patents: "Bằng sáng chế",
+    stat_formulas: "Công thức độc quyền",
+    stat_scientists: "Nhà khoa học",
+    meta_location: "Địa điểm",
+    meta_certified: "Chứng nhận",
+    cta_research: "Khám phá nghiên cứu",
+
+    // Hero bio
+    hero_bio: `Phòng nghiên cứu Do.Son kết hợp <strong>công nghệ sinh học tiên tiến từ Anh Quốc</strong> với kho tàng <strong>thảo dược phong phú của Việt Nam</strong> — tạo ra dòng mỹ phẩm cao cấp đạt <strong>ISO 22716 GMP</strong> và tiêu chuẩn <strong>UK MHRA</strong>.`,
+
+    // About
+    about_title_1: "Nơi khoa học ",
+    about_title_2: "thiên nhiên",
+    about_sub: "Do.Son Pharma Research Lab được thành lập năm 2012 với sứ mệnh mang tiêu chuẩn dược phẩm vào ngành mỹ phẩm cao cấp. Cầu nối giữa công nghệ sinh học tiên tiến của Anh Quốc và nguồn thảo dược phong phú của Việt Nam.",
+    about_founded: "Thành lập",
+    pillar1_title: "Nghiên cứu chuyên sâu",
+    pillar1_desc: "Mỗi công thức trải qua 18–24 tháng nghiên cứu và thử nghiệm lâm sàng trước khi phát hành.",
+    pillar2_title: "Nguồn gốc bền vững",
+    pillar2_desc: "Nguyên liệu thu hoạch bền vững từ các trang trại hữu cơ được chứng nhận tại Việt Nam.",
+    pillar3_title: "Tiêu chuẩn quốc tế",
+    pillar3_desc: "ISO 22716 GMP, EU Cosmetics Regulation và UK MHRA — đạt tiêu chuẩn cao nhất toàn cầu.",
+
+    // Research
+    research_label: "Lĩnh vực nghiên cứu",
+    research_sub_title: "tiên phong",
+    lab_molecular: "Phân tử học",
+    lab_data: "Dữ liệu nghiên cứu",
+    lab_clinical: "Thử nghiệm lâm sàng",
+
+    // Marquee
+    marquee: [
+      "Nghiên cứu lâm sàng", "Thảo dược Việt Nam", "Công nghệ nano",
+      "UK GMP Certified", "Vegan · Cruelty-Free", "Sinh thái bền vững",
+      "B Corp Certified", "ISO 22716 GMP"
+    ],
+
+    // Research cards
+    research_cards: [
+      { num:"01 —", icon:"⚗️", title:"Nano Encapsulation", desc:"Hệ vi bọc nano tối ưu khả năng thẩm thấu hoạt chất vào lớp bì da, tăng hiệu quả tới 300%.", tags:["Nano Tech","Dermal Delivery"] },
+      { num:"02 —", icon:"🧬", title:"Hoạt chất Thực vật VN", desc:"Chiết xuất và tiêu chuẩn hóa hoạt chất từ 80+ loại thảo dược đặc hữu Việt Nam.", tags:["Phytochemistry","Ethnobotany"] },
+      { num:"03 —", icon:"🔭", title:"Da liễu học Phân tử", desc:"Cơ chế lão hóa ở cấp phân tử và gen, phát triển giải pháp chống lão hóa thế hệ mới.", tags:["Anti-aging","Collagen"] },
+      { num:"04 —", icon:"🌊", title:"Hệ Vi sinh vật Da", desc:"Prebiotic và postbiotic từ thực vật Việt Nam để cân bằng hệ sinh thái da.", tags:["Microbiome","Prebiotics"] },
+      { num:"05 —", icon:"☀️", title:"Quang học Da Nhiệt đới", desc:"Chuyên biệt cho da châu Á nhiệt đới, giải pháp UV cho Fitzpatrick III–V.", tags:["UV Defense","Asian Skin"] },
+      { num:"06 —", icon:"♻️", title:"Green Chemistry", desc:"Quy trình chiết xuất xanh, giảm dung môi hóa học tới 90% so với phương pháp truyền thống.", tags:["Sustainability","Eco-design"] },
+    ],
+
+    // Ingredients
+    ingr_label: "Nguyên liệu đặc biệt",
+    ingr_title_em: "Tinh hoa",
+    ingr_title_rest: "từ thiên nhiên Việt",
+    ingr_active: "Hoạt chất chính",
+    ingr_benefit: "Tác dụng",
+    ingr_conc: "Nồng độ tối ưu",
+    ingr_cert: "Chứng nhận",
+
+    // Team
+    team_label: "Đội ngũ chuyên gia",
+    team_title: "Những nhà khoa học",
+    team_pub_label: "ấn phẩm khoa học",
+    team_species_label: "loài thảo dược xác định",
+    team_members: [
+      { initials:"NV", name:"Dr. Nguyễn Văn Minh", role:"Giám đốc Nghiên cứu", bio:"PhD Dược lý học, Đại học London. 18 năm nghiên cứu phytochemistry.", pub:"24", pubLabel:"ấn phẩm khoa học" },
+      { initials:"LT", name:"Dr. Lê Thị Hương", role:"Trưởng phòng Da liễu", bio:"MD, PhD Da liễu học, Imperial College London. Chuyên gia da châu Á nhiệt đới.", pub:"31", pubLabel:"ấn phẩm khoa học" },
+      { initials:"PT", name:"Dr. Phạm Tuấn Anh", role:"Trưởng phòng Nano Lab", bio:"PhD Hóa học vật liệu, Đại học Cambridge. Chuyên gia hệ thống nano delivery.", pub:"18", pubLabel:"ấn phẩm khoa học" },
+      { initials:"TN", name:"MSc. Trần Thị Ngọc", role:"Nhà Thực vật học Cao cấp", bio:"MSc Thực vật học nhiệt đới. 15 năm nghiên cứu thảo dược Việt Nam.", pub:"200+", pubLabel:"loài thảo dược xác định" },
+    ],
+
+    // Publications
+    pub_label: "Ấn phẩm khoa học",
+    pub_title_em: "Công trình",
+    pub_title_rest: "nghiên cứu",
+    publications: [
+      {
+        year:"2024",
+        title:"Nano-encapsulation của quercetin từ <em>Nelumbo nucifera</em> và ứng dụng chống lão hóa da",
+        authors:"Nguyen V.M., Le T.H., Pham T.A. et al.",
+        journal:"Journal of Cosmetic Dermatology, Vol. 23, Issue 4",
+        tags:["Nano Tech","Anti-aging","Lotus"]
+      },
+      {
+        year:"2024",
+        title:"Curcuminoid từ <em>Curcuma longa</em> Hưng Yên: Đặc tính dược lý và ứng dụng làm sáng da",
+        authors:"Le T.H., Tran T.N., Do S.K. et al.",
+        journal:"International Journal of Pharmaceutics, Vol. 654",
+        tags:["Turmeric","Skin Brightening"]
+      },
+      {
+        year:"2023",
+        title:"Nghiên cứu hệ microbiome da người Việt Nam và tác động của prebiotic thực vật nhiệt đới",
+        authors:"Pham T.A., Nguyen V.M. et al.",
+        journal:"Skin Pharmacology and Physiology, Vol. 36",
+        tags:["Microbiome","Prebiotics"]
+      },
+      {
+        year:"2023",
+        title:"Lycopene từ hạt gấc <em>Momordica cochinchinensis</em>: Hiệu quả chống oxy hóa và bảo vệ UV",
+        authors:"Tran T.N., Le T.H., Nguyen V.M. et al.",
+        journal:"Food & Function, Vol. 14, Issue 8",
+        tags:["Gac Fruit","Lycopene","UV Protection"]
+      },
+    ],
+
+    // Awards
+    awards_label: "Giải thưởng & Đối tác",
+    awards_title_em: "Được công nhận",
+    awards_title_rest: "toàn cầu",
+    awards: [
+      { icon:"🏆", text:"Giải thưởng Đổi mới Mỹ phẩm Châu Á", year:"2024", top:true },
+      { icon:"🎖️", text:"B Corp Certification", year:"2023", top:true },
+      { icon:"🌱", text:"Giải thưởng Phát triển Bền vững VN", year:"2023", top:false },
+      { icon:"📋", text:"Top 10 SEA Biotech — Forbes Asia", year:"2022", top:false },
+      { icon:"🇬🇧", text:"UK MHRA Cosmetics Compliance", year:"2022", top:false },
+      { icon:"⭐", text:"ISO 22716 GMP — Bureau Veritas", year:"2021", top:false },
+    ],
+    partners_label: "Đối tác toàn cầu",
+    partner_hpu: "Đại học Dược HN",
+    partner_nim: "Viện Dược liệu VN",
+
+    // News
+    news_label: "Tin tức",
+    news_title_em: "Cập nhật",
+    news_title_rest: "từ phòng Lab",
+    news_items: [
+      {
+        cat:"Nghiên cứu",
+        title:"Đột phá nano encapsulation: Tăng hiệu quả hoạt chất 300%",
+        excerpt:"Hệ thống nano-liposome thế hệ mới mở ra hướng đi mới cho ngành mỹ phẩm chức năng.",
+        date:"15 Tháng 3 2025",
+        svgPath:`<circle cx="22" cy="22" r="18" stroke="var(--accent)" stroke-width=".8"/><circle cx="22" cy="22" r="9" stroke="var(--accent)" stroke-width=".6" stroke-dasharray="3 5"/><circle cx="22" cy="22" r="3" fill="var(--accent)"/>`
+      },
+      {
+        cat:"Chứng nhận",
+        title:"Do.Son nhận chứng nhận B Corp 2024",
+        excerpt:"Doanh nghiệp B Corp đầu tiên trong ngành mỹ phẩm Việt Nam.",
+        date:"02 Tháng 2 2025",
+        svgPath:`<path d="M19 3 L35 35 L3 35 Z" stroke="var(--accent)" stroke-width=".8" fill="none"/><circle cx="19" cy="24" r="4" stroke="var(--accent)" stroke-width=".6"/>`
+      },
+      {
+        cat:"Nguyên liệu",
+        title:"Khám phá vùng trồng Sâm Ngọc Linh tại Kon Tum",
+        excerpt:"Tiêu chuẩn thu hoạch bền vững được xác nhận tại vùng trồng nguyên liệu.",
+        date:"18 Tháng 1 2025",
+        svgPath:`<rect x="3" y="3" width="32" height="32" stroke="var(--accent)" stroke-width=".8" fill="none"/><rect x="9" y="9" width="20" height="20" stroke="var(--accent)" stroke-width=".6"/><circle cx="19" cy="19" r="4" fill="var(--accent)" opacity=".4"/>`
+      },
+    ],
+
+    // Contact
+    contact_title_em: "Kết nối",
+    contact_title_rest: "với phòng Lab",
+    contact_address_label: "Địa chỉ",
+    contact_address_val: "Tầng 5, 62 Trần Quang Khải\nTân Định, Q.1, TP. Hồ Chí Minh",
+    contact_phone_label: "Điện thoại",
+    contact_hours_label: "Giờ làm việc",
+    contact_hours_val: "Thứ 2 – Thứ 6 · 8:00 – 17:30",
+    form_name: "Họ và tên",
+    form_name_ph: "Nguyễn Văn A",
+    form_company: "Công ty / Lĩnh vực",
+    form_company_ph: "Tên công ty hoặc lĩnh vực",
+    form_phone: "Số điện thoại",
+    form_phone_ph: "0912 345 678",
+    form_purpose: "Mục đích",
+    form_message: "Nội dung",
+    form_message_ph: "Mô tả nhu cầu hoặc câu hỏi của bạn...",
+    form_submit: "Gửi tin nhắn",
+    form_sending: "Đang gửi...",
+    form_sent: "✓ Đã gửi thành công! Chúng tôi sẽ phản hồi sớm.",
+    form_err: "✕ Có lỗi xảy ra. Vui lòng thử lại hoặc email trực tiếp.",
+    form_purpose_opts: ["Hợp tác nghiên cứu","Phân phối / Partnership","Mua nguyên liệu","Khác"],
+
+    // Footer
+    footer_copy: "© 2025 Do.Son Pharma Research Laboratory",
+  },
+
+  en: {
+    // Nav
+    nav_logo_sub: "Research Laboratory",
+    nav_about: "About",
+    nav_research: "Research",
+    nav_ingredients: "Ingredients",
+    nav_team: "Team",
+    nav_publications: "Publications",
+    nav_contact: "Contact",
+
+    // Hero
+    hero_eyebrow: "Research Laboratory · Est. 2012",
+    hero_title_1: "Science ",
+    hero_title_em: "meets",
+    hero_title_2: "Vietnamese Nature",
+    stat_years: "Years Research",
+    stat_patents: "Patents",
+    stat_formulas: "Proprietary Formulas",
+    stat_scientists: "Scientists",
+    meta_location: "Location",
+    meta_certified: "Certified",
+    cta_research: "Explore Research",
+
+    // Hero bio
+    hero_bio: `Do.Son Research Lab bridges <strong>advanced UK biotechnology</strong> with Vietnam's <strong>rich botanical heritage</strong> — crafting luxury cosmetics to <strong>ISO 22716 GMP</strong> and <strong>UK MHRA</strong> standards.`,
+
+    // About
+    about_title_1: "Where science ",
+    about_title_2: "nature",
+    about_sub: "Founded in 2012, Do.Son Pharma Research Lab bridges advanced UK biotechnology with Vietnam's rich botanical heritage. Every product results from thousands of hours of research and clinical testing.",
+    about_founded: "Founded",
+    pillar1_title: "In-depth Research",
+    pillar1_desc: "Each formula undergoes 18–24 months of research and clinical testing before release.",
+    pillar2_title: "Sustainable Sourcing",
+    pillar2_desc: "Sustainably harvested from certified organic farms across Vietnam.",
+    pillar3_title: "International Standards",
+    pillar3_desc: "ISO 22716 GMP, EU Cosmetics Regulation, and UK MHRA — world's highest standards.",
+
+    // Research
+    research_label: "Research Areas",
+    research_sub_title: "Pioneering",
+    lab_molecular: "Molecular Science",
+    lab_data: "Research Data",
+    lab_clinical: "Clinical Testing",
+
+    // Marquee
+    marquee: [
+      "Clinical Research", "Vietnamese Botanicals", "Nano Technology",
+      "UK GMP Certified", "Vegan · Cruelty-Free", "Eco Sustainable",
+      "B Corp Certified", "ISO 22716 GMP"
+    ],
+
+    // Research cards
+    research_cards: [
+      { num:"01 —", icon:"⚗️", title:"Nano Encapsulation", desc:"Nano-encapsulation systems optimizing active ingredient penetration, increasing efficacy up to 300%.", tags:["Nano Tech","Dermal Delivery"] },
+      { num:"02 —", icon:"🧬", title:"Vietnamese Phytochemicals", desc:"Extracting and standardizing actives from 80+ endemic Vietnamese botanical species.", tags:["Phytochemistry","Ethnobotany"] },
+      { num:"03 —", icon:"🔭", title:"Molecular Dermatology", desc:"Studying skin aging mechanisms at molecular level, developing next-gen anti-aging solutions.", tags:["Anti-aging","Collagen"] },
+      { num:"04 —", icon:"🌊", title:"Skin Microbiome", desc:"Plant-derived prebiotics and postbiotics for healthy skin microbiome balance.", tags:["Microbiome","Prebiotics"] },
+      { num:"05 —", icon:"☀️", title:"Tropical Photobiology", desc:"Specialized for Asian skin in tropical climates, UV defense for Fitzpatrick III–V.", tags:["UV Defense","Asian Skin"] },
+      { num:"06 —", icon:"♻️", title:"Green Chemistry", desc:"Green extraction processes reducing chemical solvents by up to 90% vs traditional methods.", tags:["Sustainability","Eco-design"] },
+    ],
+
+    // Ingredients
+    ingr_label: "Key Ingredients",
+    ingr_title_em: "Essence",
+    ingr_title_rest: "of Vietnamese Nature",
+    ingr_active: "Key Active",
+    ingr_benefit: "Benefit",
+    ingr_conc: "Optimal Conc.",
+    ingr_cert: "Certified",
+
+    // Team
+    team_label: "Expert Team",
+    team_title: "The Scientists",
+    team_pub_label: "publications",
+    team_species_label: "botanical species identified",
+    team_members: [
+      { initials:"NV", name:"Dr. Nguyen Van Minh", role:"Research Director", bio:"PhD Pharmacology, University of London. 18 years phytochemistry research.", pub:"24", pubLabel:"publications" },
+      { initials:"LT", name:"Dr. Le Thi Huong", role:"Head of Dermatology", bio:"MD, PhD Dermatology, Imperial College London. Asian tropical skin specialist.", pub:"31", pubLabel:"publications" },
+      { initials:"PT", name:"Dr. Pham Tuan Anh", role:"Nano Lab Director", bio:"PhD Materials Chemistry, University of Cambridge. Nano delivery specialist.", pub:"18", pubLabel:"publications" },
+      { initials:"TN", name:"MSc. Tran Thi Ngoc", role:"Senior Botanist", bio:"MSc Tropical Botany. 15 years researching Vietnamese medicinal herbs.", pub:"200+", pubLabel:"botanical species identified" },
+    ],
+
+    // Publications
+    pub_label: "Scientific Publications",
+    pub_title_em: "Research",
+    pub_title_rest: "Publications",
+    publications: [
+      {
+        year:"2024",
+        title:"Nano-encapsulation of quercetin from <em>Nelumbo nucifera</em> and anti-aging skin applications",
+        authors:"Nguyen V.M., Le T.H., Pham T.A. et al.",
+        journal:"Journal of Cosmetic Dermatology, Vol. 23, Issue 4",
+        tags:["Nano Tech","Anti-aging","Lotus"]
+      },
+      {
+        year:"2024",
+        title:"Curcuminoids from Hung Yen <em>Curcuma longa</em>: Pharmacological properties and skin-brightening applications",
+        authors:"Le T.H., Tran T.N., Do S.K. et al.",
+        journal:"International Journal of Pharmaceutics, Vol. 654",
+        tags:["Turmeric","Skin Brightening"]
+      },
+      {
+        year:"2023",
+        title:"Vietnamese skin microbiome study and the effects of tropical plant-derived prebiotics",
+        authors:"Pham T.A., Nguyen V.M. et al.",
+        journal:"Skin Pharmacology and Physiology, Vol. 36",
+        tags:["Microbiome","Prebiotics"]
+      },
+      {
+        year:"2023",
+        title:"Lycopene from <em>Momordica cochinchinensis</em> (Gac) seeds: Antioxidant efficacy and UV protection",
+        authors:"Tran T.N., Le T.H., Nguyen V.M. et al.",
+        journal:"Food & Function, Vol. 14, Issue 8",
+        tags:["Gac Fruit","Lycopene","UV Protection"]
+      },
+    ],
+
+    // Awards
+    awards_label: "Awards & Partners",
+    awards_title_em: "Recognized",
+    awards_title_rest: "Globally",
+    awards: [
+      { icon:"🏆", text:"Asia Cosmetic Innovation Award", year:"2024", top:true },
+      { icon:"🎖️", text:"B Corp Certification", year:"2023", top:true },
+      { icon:"🌱", text:"Vietnam Sustainable Development Award", year:"2023", top:false },
+      { icon:"📋", text:"Top 10 SEA Biotech — Forbes Asia", year:"2022", top:false },
+      { icon:"🇬🇧", text:"UK MHRA Cosmetics Compliance", year:"2022", top:false },
+      { icon:"⭐", text:"ISO 22716 GMP — Bureau Veritas", year:"2021", top:false },
+    ],
+    partners_label: "Global Partners",
+    partner_hpu: "Hanoi Univ. of Pharmacy",
+    partner_nim: "Nat'l Inst. of Medicinal Materials",
+
+    // News
+    news_label: "News",
+    news_title_em: "Latest",
+    news_title_rest: "from the Lab",
+    news_items: [
+      {
+        cat:"Research",
+        title:"Nano encapsulation breakthrough: 300% efficacy increase",
+        excerpt:"Next-gen nano-liposome systems open new paths for functional cosmetics.",
+        date:"15 March 2025",
+        svgPath:`<circle cx="22" cy="22" r="18" stroke="var(--accent)" stroke-width=".8"/><circle cx="22" cy="22" r="9" stroke="var(--accent)" stroke-width=".6" stroke-dasharray="3 5"/><circle cx="22" cy="22" r="3" fill="var(--accent)"/>`
+      },
+      {
+        cat:"Certification",
+        title:"Do.Son receives B Corp Certification 2024",
+        excerpt:"First B Corp certified company in Vietnam's cosmetics industry.",
+        date:"02 February 2025",
+        svgPath:`<path d="M19 3 L35 35 L3 35 Z" stroke="var(--accent)" stroke-width=".8" fill="none"/><circle cx="19" cy="24" r="4" stroke="var(--accent)" stroke-width=".6"/>`
+      },
+      {
+        cat:"Ingredients",
+        title:"Exploring Ngoc Linh Ginseng cultivation in Kon Tum",
+        excerpt:"Sustainable harvest standards confirmed at cultivation sites.",
+        date:"18 January 2025",
+        svgPath:`<rect x="3" y="3" width="32" height="32" stroke="var(--accent)" stroke-width=".8" fill="none"/><rect x="9" y="9" width="20" height="20" stroke="var(--accent)" stroke-width=".6"/><circle cx="19" cy="19" r="4" fill="var(--accent)" opacity=".4"/>`
+      },
+    ],
+
+    // Contact
+    contact_title_em: "Connect",
+    contact_title_rest: "with the Lab",
+    contact_address_label: "Address",
+    contact_address_val: "5th Floor, 62 Tran Quang Khai\nTan Dinh, District 1, Ho Chi Minh City",
+    contact_phone_label: "Phone",
+    contact_hours_label: "Hours",
+    contact_hours_val: "Mon – Fri · 8:00 – 17:30",
+    form_name: "Full Name",
+    form_name_ph: "John Smith",
+    form_company: "Company / Industry",
+    form_company_ph: "Your company or field",
+    form_phone: "Phone Number",
+    form_phone_ph: "+84 912 345 678",
+    form_purpose: "Inquiry Type",
+    form_message: "Message",
+    form_message_ph: "Describe your needs or questions...",
+    form_submit: "Send Message",
+    form_sending: "Sending...",
+    form_sent: "✓ Sent successfully! We'll get back to you soon.",
+    form_err: "✕ Something went wrong. Please try again or email us directly.",
+    form_purpose_opts: ["Research Collaboration","Distribution / Partnership","Ingredient Procurement","Other"],
+
+    // Footer
+    footer_copy: "© 2025 Do.Son Pharma Research Laboratory",
+  }
+};
+
+/* ══════════════════════════════════════
+   INGREDIENT DATA
+══════════════════════════════════════ */
+const INGR = [
+  {
+    e:'🪷',
+    name:'Hoa Sen Việt Nam', nameEn:'Vietnamese Lotus',
+    sci:'Nelumbo nucifera · Đồng Tháp, Vietnam',
+    sciEn:'Nelumbo nucifera · Dong Thap, Vietnam',
+    desc:'Chiết xuất hoa sen giàu flavonoid, alkaloid và polysaccharide quý. Ức chế tyrosinase hiệu quả, làm sáng da và chống oxy hóa vượt trội so với Vitamin C đến 40%.',
+    descEn:'Lotus extract rich in flavonoids, alkaloids, and polysaccharides. Superior tyrosinase inhibition, antioxidant activity 40% above Vitamin C.',
+    active:'Nelumbin, Quercetin', benefit:'Làm sáng, chống oxy hóa', benefitEn:'Brightening, Antioxidant', conc:'0.5 – 2.0%', cert:'Organic, COSMOS'
+  },
+  {
+    e:'✨',
+    name:'Nghệ Hưng Yên', nameEn:'Hung Yen Turmeric',
+    sci:'Curcuma longa · Hưng Yên, Vietnam',
+    sciEn:'Curcuma longa · Hung Yen, Vietnam',
+    desc:'Curcuminoid hàm lượng cao từ nghệ Hưng Yên với ≥5% curcumin — gấp đôi tiêu chuẩn thương mại — chống viêm và làm đều màu da.',
+    descEn:'High-content curcuminoids with ≥5% curcumin — double commercial standards — anti-inflammatory and tone-evening.',
+    active:'Curcumin, Bisdemethoxycurcumin', benefit:'Kháng viêm, làm đều màu', benefitEn:'Anti-inflammatory, Tone-evening', conc:'0.3 – 1.5%', cert:'Organic, Halal'
+  },
+  {
+    e:'🌿',
+    name:'Sâm Ngọc Linh', nameEn:'Ngoc Linh Ginseng',
+    sci:'Panax vietnamensis · Kon Tum, Vietnam',
+    sciEn:'Panax vietnamensis · Kon Tum, Vietnam',
+    desc:'Loài nhân sâm quý hiếm nhất thế giới, mọc ở độ cao 1.200–2.100m tại Kon Tum. Saponin MR2 độc đáo với hoạt tính adaptogen và kích thích tái tạo collagen.',
+    descEn:"World's rarest ginseng, growing 1,200–2,100m in Kon Tum. Unique MR2 saponin with adaptogen and collagen renewal activity.",
+    active:'MR2 Saponin, Ginsenoside', benefit:'Tái tạo collagen, adaptogen', benefitEn:'Collagen renewal, Adaptogen', conc:'0.1 – 0.5%', cert:'Wild-crafted, Traceable'
+  },
+  {
+    e:'🌊',
+    name:'Rong Biển Phú Quốc', nameEn:'Phu Quoc Sea Algae',
+    sci:'Sargassum mcclurei · Phú Quốc, Vietnam',
+    sciEn:'Sargassum mcclurei · Phu Quoc, Vietnam',
+    desc:'Thu hoạch bền vững từ vùng biển trong xanh Phú Quốc. Giàu fucoidan, alginic acid và vi khoáng thiết yếu, giúp giữ ẩm sâu và kiểm soát dầu nhờn.',
+    descEn:'Sustainably harvested from pristine Phu Quoc waters. Rich in fucoidan, alginic acid, and essential minerals for deep hydration.',
+    active:'Fucoidan, Phlorotannin', benefit:'Giữ ẩm, kiểm soát nhờn', benefitEn:'Hydration, Sebum control', conc:'1.0 – 5.0%', cert:'Marine Certified, MSC'
+  },
+  {
+    e:'🍊',
+    name:'Bơ Hạt Gấc', nameEn:'Gac Seed Butter',
+    sci:'Momordica cochinchinensis · Đông Nam Bộ',
+    sciEn:'Momordica cochinchinensis · Southeast Vietnam',
+    desc:'Loại quả đặc hữu Việt Nam với hàm lượng lycopene cao nhất thế giới (70× cà chua). Giàu beta-carotene và tocopherol bảo vệ da khỏi UV.',
+    descEn:"Vietnam's endemic fruit with world's highest lycopene (70× tomatoes). Rich in beta-carotene and tocopherols for UV protection.",
+    active:'Lycopene, β-Carotene, Tocopherol', benefit:'Chống UV, chống oxy hóa', benefitEn:'UV protection, Antioxidant', conc:'2.0 – 10.0%', cert:'Organic, Vegan'
+  },
+  {
+    e:'🍵',
+    name:'Trà Xanh Thái Nguyên', nameEn:'Thai Nguyen Green Tea',
+    sci:'Camellia sinensis · Thái Nguyên, Vietnam',
+    sciEn:'Camellia sinensis · Thai Nguyen, Vietnam',
+    desc:'Trà xanh Thái Nguyên với hàm lượng EGCG cao nhất châu Á. Chuẩn hóa ≥98% polyphenol, chống lão hóa, kháng khuẩn.',
+    descEn:"Thai Nguyen green tea with Asia's highest EGCG. Standardized ≥98% polyphenol for anti-aging and antimicrobial effects.",
+    active:'EGCG, Theanine, Catechins', benefit:'Chống lão hóa, kháng khuẩn', benefitEn:'Anti-aging, Antimicrobial', conc:'0.5 – 3.0%', cert:'Organic, COSMOS, Fair Trade'
+  }
+];
+
+/* ══════════════════════════════════════
+   STATE
+══════════════════════════════════════ */
+let lang = localStorage.getItem('dsp-lang') || 'vi';
+let curIngr = 0;
+
+/* ══════════════════════════════════════
+   RENDER DYNAMIC SECTIONS
+══════════════════════════════════════ */
+function renderResearchGrid() {
+  const T = TRANSLATIONS[lang];
+  document.getElementById('rgGrid').innerHTML = T.research_cards.map(c => `
+    <div class="rg-card">
+      <div class="rg-num">${c.num}</div>
+      <div class="rg-icon">${c.icon}</div>
+      <div class="rg-title">${c.title}</div>
+      <div class="rg-desc">${c.desc}</div>
+      <div class="rg-tags">${c.tags.map(t=>`<span class="rg-tag">${t}</span>`).join('')}</div>
+    </div>`).join('');
+}
+
+function renderIngrList() {
+  document.getElementById('ingrList').innerHTML = INGR.map((d,i) => {
+    const sciStr = lang === 'vi' ? d.sci : d.sciEn;
+    const origin = sciStr.split('·')[1]?.trim() || '';
+    return `<div class="ingr-item${i===curIngr?' active':''}" onclick="showIngr(${i})">
+      <span class="ingr-emoji">${d.e}</span>
+      <div>
+        <div class="ingr-name">${lang==='vi'?d.name:d.nameEn}</div>
+        <div class="ingr-origin">${origin}</div>
+      </div>
+      <span class="ingr-arrow">→</span>
+    </div>`;
+  }).join('');
+}
+
+function renderTeamGrid() {
+  const T = TRANSLATIONS[lang];
+  document.getElementById('teamGrid').innerHTML = T.team_members.map(m => `
+    <div class="team-card">
+      <div class="team-avatar">${m.initials}</div>
+      <div class="team-name">${m.name}</div>
+      <div class="team-role">${m.role}</div>
+      <div class="team-bio">${m.bio}</div>
+      <div class="team-pub"><span>${m.pub}</span> ${m.pubLabel}</div>
+    </div>`).join('');
+}
+
+function renderPublications() {
+  const T = TRANSLATIONS[lang];
+  document.getElementById('pubList').innerHTML = T.publications.map(p => `
+    <div class="pub-item">
+      <div class="pub-year">${p.year}</div>
+      <div>
+        <div class="pub-title">${p.title}</div>
+        <div class="pub-authors">${p.authors}</div>
+        <div class="pub-journal">${p.journal}</div>
+        <div class="pub-tags">${p.tags.map(t=>`<span class="pub-tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderAwards() {
+  const T = TRANSLATIONS[lang];
+  document.getElementById('awList').innerHTML = T.awards.map(a => `
+    <div class="aw-row${a.top?' top':''}">
+      <span class="aw-icon">${a.icon}</span>
+      <span class="aw-text"><strong>${a.text}</strong></span>
+      <span class="aw-yr">${a.year}</span>
+    </div>`).join('');
+}
+
+function renderNews() {
+  const T = TRANSLATIONS[lang];
+  const sizes = ['44','38','38'];
+  document.getElementById('newsGrid').innerHTML = T.news_items.map((n,i) => `
+    <div class="news-card">
+      <div class="news-thumb">
+        <svg width="${sizes[i]}" height="${sizes[i]}" viewBox="0 0 ${sizes[i]} ${sizes[i]}" fill="none">${n.svgPath}</svg>
+      </div>
+      <div class="news-body">
+        <div class="news-cat">${n.cat}</div>
+        <div class="news-title">${n.title}</div>
+        <div class="news-excerpt">${n.excerpt}</div>
+        <div class="news-date">${n.date}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderMarquee() {
+  const T = TRANSLATIONS[lang];
+  const items = [...T.marquee, ...T.marquee]; // duplicate for seamless loop
+  document.getElementById('marqueeTrack').innerHTML = items.map(m =>
+    `<span class="marquee-item"><span class="dot">◈</span>${m}</span>`).join('');
+}
+
+function renderSelect() {
+  const T = TRANSLATIONS[lang];
+  const sel = document.getElementById('purposeSelect');
+  if (!sel) return;
+  sel.innerHTML = T.form_purpose_opts.map(o=>`<option>${o}</option>`).join('');
+}
+
+function renderFormPlaceholders() {
+  const T = TRANSLATIONS[lang];
+  const nameInput = document.getElementById('formNameInput');
+  const msgInput = document.getElementById('formMsgInput');
+  const companyInput = document.getElementById('formCompanyInput');
+  const phoneInput = document.getElementById('formPhoneInput');
+  if (nameInput) nameInput.placeholder = T.form_name_ph;
+  if (msgInput) msgInput.placeholder = T.form_message_ph;
+  if (companyInput) companyInput.placeholder = T.form_company_ph;
+  if (phoneInput) phoneInput.placeholder = T.form_phone_ph;
+}
+
+/* ══════════════════════════════════════
+   INGREDIENT DETAIL
+══════════════════════════════════════ */
+function showIngr(idx) {
+  curIngr = idx;
+  renderIngrList();
+  const c = document.getElementById('ingrCard');
+  c.style.opacity = '0'; c.style.transform = 'translateY(8px)';
+  setTimeout(() => {
+    const d = INGR[idx];
+    document.getElementById('dEmoji').textContent = d.e;
+    document.getElementById('dName').textContent = lang === 'vi' ? d.name : d.nameEn;
+    document.getElementById('dSci').textContent = lang === 'vi' ? d.sci : d.sciEn;
+    document.getElementById('dDesc').textContent = lang === 'vi' ? d.desc : d.descEn;
+    document.getElementById('dActive').textContent = d.active;
+    document.getElementById('dBenefit').textContent = lang === 'vi' ? d.benefit : d.benefitEn;
+    document.getElementById('dConc').textContent = d.conc;
+    document.getElementById('dCert').textContent = d.cert;
+    c.style.transition = 'opacity .28s ease, transform .28s ease';
+    c.style.opacity = '1'; c.style.transform = 'none';
+  }, 100);
+}
+
+/* ══════════════════════════════════════
+   i18n — unified
+══════════════════════════════════════ */
+function applyTranslations() {
+  const T = TRANSLATIONS[lang];
+
+  // Static .t elements
+  document.querySelectorAll('.t[data-key]').forEach(el => {
+    const val = T[el.dataset.key];
+    if (val !== undefined) {
+      if (el.dataset.key === 'contact_address_val') {
+        el.innerHTML = val.replace('\n','<br>');
+      } else {
+        el.textContent = val;
+      }
+    }
+  });
+
+  // Hero bio (has HTML)
+  document.getElementById('heroBio').innerHTML = T.hero_bio;
+
+  // Dynamic sections
+  renderResearchGrid();
+  renderIngrList();
+  renderTeamGrid();
+  renderPublications();
+  renderAwards();
+  renderNews();
+  renderMarquee();
+  renderSelect();
+  renderFormPlaceholders();
+  showIngr(curIngr);
+
+  // Lang buttons
+  document.getElementById('btn-vi').classList.toggle('lang-active', lang === 'vi');
+  document.getElementById('btn-en').classList.toggle('lang-active', lang === 'en');
+
+  // html lang attr
+  document.documentElement.lang = lang;
+}
+
+function setLang(l) {
+  lang = l;
+  localStorage.setItem('dsp-lang', l);
+  applyTranslations();
+}
+
+/* ══════════════════════════════════════
+   THEME
+══════════════════════════════════════ */
+const THEMES = { github:'GitHub', vscode:'VS Code', tokyo:'Tokyo', catppuccin:'Mocha', solarized:'Solar', light:'Light' };
+function setTheme(t, label) {
+  document.documentElement.dataset.theme = t;
+  document.getElementById('themeLabel').textContent = label;
+  document.querySelectorAll('#theme-dd .dropdown-item').forEach((el, i) => {
+    el.classList.toggle('active', Object.keys(THEMES)[i] === t);
+  });
+  localStorage.setItem('dsp-theme', t);
+  document.getElementById('theme-dd').classList.remove('open');
+}
+
+/* ══════════════════════════════════════
+   DROPDOWN
+══════════════════════════════════════ */
+function toggleDD(id) {
+  document.querySelectorAll('.dropdown').forEach(d => { if (d.id !== id) d.classList.remove('open'); });
+  document.getElementById(id).classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.dropdown-wrap'))
+    document.querySelectorAll('.dropdown').forEach(d => d.classList.remove('open'));
+});
+
+/* ══════════════════════════════════════
+   MOBILE
+══════════════════════════════════════ */
+function closeMob() { document.getElementById('mobMenu').classList.remove('open'); }
+
+/* ══════════════════════════════════════
+   FORM — Formspree async submit
+══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contact_form');
+  if (!form) return;
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const T = TRANSLATIONS[lang];
+    const btn = document.getElementById('submit_btn');
+    const msgBox = document.getElementById('msg_box');
+    btn.disabled = true;
+    btn.innerHTML = `<span>${T.form_sending}</span>`;
+    msgBox.className = 'msg-box';
+    msgBox.textContent = '';
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        msgBox.className = 'msg-box ok';
+        msgBox.textContent = T.form_sent;
+        form.reset();
+        renderFormPlaceholders();
+      } else {
+        throw new Error('server error');
+      }
+    } catch {
+      msgBox.className = 'msg-box err';
+      msgBox.textContent = T.form_err;
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = `<span class="t" data-key="form_submit">${T.form_submit}</span> →`;
+    }
+  });
+});
+
+/* ══════════════════════════════════════
+   FADE IN
+══════════════════════════════════════ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('on'), i * 40);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: .06 });
+document.querySelectorAll('.fi').forEach(el => io.observe(el));
+
+/* ══════════════════════════════════════
+   ACTIVE NAV
+══════════════════════════════════════ */
+const navAs = document.querySelectorAll('.nav-center a');
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting)
+      navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  });
+}, { threshold: .2 });
+document.querySelectorAll('section[id]').forEach(s => secObs.observe(s));
+
+/* ══════════════════════════════════════
+   INIT
+══════════════════════════════════════ */
+(function init() {
+  const savedTheme = localStorage.getItem('dsp-theme') || 'github';
+  setTheme(savedTheme, THEMES[savedTheme] || 'GitHub');
+  applyTranslations();
+})();
+</script>
+</body>
+</html>
