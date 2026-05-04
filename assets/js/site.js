@@ -236,9 +236,10 @@
         }
         form.reset();
       } catch (err) {
+        console.error('[Formspree] submit failed:', err, 'action:', form.action);
         submit.disabled = false;
         submit.innerHTML = original;
-        alert('Sorry — your enquiry could not be sent. Please email enquiries@dosonpharma.com directly.');
+        alert('Sorry — your enquiry could not be sent (' + (err && err.message || 'unknown') + '). Please email enquiries@dosonpharma.com directly.');
       }
     });
   }
